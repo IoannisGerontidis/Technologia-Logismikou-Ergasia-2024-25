@@ -1,0 +1,84 @@
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .register-container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 320px;
+    text-align: center;
+  }
+  h2 {
+    margin-bottom: 20px;
+    color: #34495e;
+  }
+  input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1.8px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  input:focus {
+    border-color: #2ecc71;
+    outline: none;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #2ecc71;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #27ae60;
+  }
+  p.error-msg {
+    color: #e74c3c;
+    margin: 10px 0 0 0;
+    font-weight: 600;
+  }
+  a.login-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #2ecc71;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a.login-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="register-container">
+  <h2>Εγγραφή</h2>
+  <form method="post" novalidate>
+    <input name="username" placeholder="Όνομα χρήστη" required>
+    <input name="password" type="password" placeholder="Κωδικός" required>
+    <button type="submit">Register</button>
+  </form>
+
+  {% if error %}
+  <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+
+  <a class="login-link" href="{{ url_for('login') }}">Έχεις ήδη λογαριασμό; Κάνε login</a>
+</div>

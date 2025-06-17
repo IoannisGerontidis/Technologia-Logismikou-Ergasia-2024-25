@@ -1,0 +1,17 @@
+<h2>{{ game[0] }}</h2>
+<hr>
+<p><strong>Ημερομηνία κυκλοφορίας:</strong> {{ game[1] }}</p>
+<p><strong>Metacritic:</strong> {{ game[2] }}</p>
+<p><strong>ESRB Rating:</strong> {{ game[3]|join(', ') }}</p>
+<p><strong>Χρόνος παιχνιδιού:</strong> {{ game[4] }} ώρες</p>
+
+<p><strong>Πλατφόρμες:</strong> {{ game[5]|join(', ') }}</p>
+<p><strong>Είδη:</strong> {{ game[6]|join(', ') }}</p>
+<p><strong>Ετικέτες:</strong> {{ game[7]|join(', ') }}</p>
+<p><strong>Κατασκευαστής:</strong> {{ game[8]|join(', ') }}</p>
+
+<p><strong>Περιγραφή:</strong></p>
+<p style="white-space: pre-line;">{{ game[10] }}</p>
+
+<br>
+<a href="{{ url_for('home') }}">← Επιστροφή</a>

@@ -1,0 +1,27 @@
+<h2>Τα Αγαπημένα Μου Παιχνίδια</h2>
+{% if games %}
+  <table>
+    <thead>
+      <tr>
+        <th>Τίτλος</th>
+        <th>Ημ/νία</th>
+        <th>Score</th>
+        <th>Αφαίρεση</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for game in games %}
+      <tr>
+        <td><a href="{{ url_for('game_details', index=session['favorites'][loop.index0]) }}">{{ game[0] }}</a></td>
+        <td>{{ game[1] }}</td>
+        <td>{{ game[2] }}</td>
+        <td>
+          <a href="{{ url_for('remove_favorite', index=session['favorites'][loop.index0]) }}" style="color: red;">💔 Αφαίρεση</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>Δεν έχετε προσθέσει ακόμα αγαπημένα παιχνίδια.</p>
+{% endif %}

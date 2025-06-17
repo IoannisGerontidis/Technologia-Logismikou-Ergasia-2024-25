@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>Αρχική</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      padding: 20px;
+    }
+    h2 { color: #2c3e50; }
+    a {
+      color: #e74c3c;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 15px;
+    }
+    a:hover { text-decoration: underline; }
+    .filters-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    form.filter-form, form.combined-form {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      padding: 20px;
+      flex: 1 1 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    select, input[type=number], input[type=text] {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      font-weight: 700;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+    }
+    button:hover { background-color: #2980b9; }
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin: 25px auto;
+      max-width: 400px;
+    }
+    .search-container form { display: flex; width: 100%; }
+    .search-container input {
+      flex-grow: 1;
+      border-radius: 6px 0 0 6px;
+    }
+    .search-container button { border-radius: 0 6px 6px 0; }
+    .games-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-height: 600px;
+      overflow-y: auto;
+      padding: 10px 0;
+    }
+    .game-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      width: 240px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .badge {
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .badges {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hot { background: red; }
+    .best { background: green; }
+    .new { background: blue; }
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+<h2>Καλώς ήρθες, {{ session['user'] }} <a href="{{ url_for('logout') }}">Logout</a></h2>
+<a href="{{ url_for('show_favorites') }}">❤️ Τα Αγαπημένα μου</a>
+<a href="{{ url_for('game_stats') }}">📊 Προβολή Στατιστικών</a>
+
+<h3>Φίλτρα</h3>
+<div class="filters-container">
+  <form class="combined-form" method="post" action="{{ url_for('filter_combined') }}">
+    <label>Είδος:</label>
+    <select name="genre">
+      <option value="">--</option>
+      {% for g in genres %}<option value="{{ g }}">{{ g }}</option>{% endfor %}
+    </select>
+    <label>Πλατφόρμα:</label>
+    <select name="platform">
+      <option value="">--</option>
+      {% for p in platforms %}<option value="{{ p }}">{{ p }}</option>{% endfor %}
+    </select>
+    <label>ESRB Rating:</label>
+    <select name="rating">
+      <option value="">--</option>
+      {% for r in ratings %}<option value="{{ r }}">{{ r }}</option>{% endfor %}
+    </select>
+    <label>Metacritic Score:</label>
+    <input type="number" name="score_low" placeholder="Min">
+    <input type="number" name="score_high" placeholder="Max">
+    <label>Max Playtime (ώρες):</label>
+    <input type="number" name="playtime" placeholder="π.χ. 10">
+    <button>Εφαρμογή Φίλτρων</button>
+  </form>
+</div>
+
+<div class="search-container">
+  <form method="get" action="{{ url_for('search_title') }}">
+    <input type="text" name="query" placeholder="Αναζήτηση τίτλου...">
+    <button type="submit">🔍</button>
+  </form>
+</div>
+
+<h3 style="margin-top: 30px;">🎮 Παιχνίδια</h3>
+<form method="post" action="{{ url_for('compare') }}">
+  <div class="games-grid">
+    {% for game in games %}
+    {% set index = loop.index0 + (page - 1)*100 %}
+    <div class="game-card">
+     
+     
+      <h4><a href="{{ url_for('game_details', index=index) }}">{{ game[0] }}</a></h4>
+
+
+      <p>📅 {{ game[1] }}</p>
+      <p>⭐ {{ game[2] }}</p>
+      <div class="badges">
+        {% if index in hot_indices %}<div class="badge hot">🔥 HOT</div>{% endif %}
+        {% if index in best_indices %}<div class="badge best">🏆 BEST</div>{% endif %}
+        {% if index in new_indices %}<div class="badge new">🆕 NEW</div>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+ 
+
+{% if compare_list %}
+<div style="position: fixed; bottom: 20px; right: 20px; background: #fff; border: 2px solid #3498db; padding: 12px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 999;">
+  <strong>🧩 Επιλεγμένα για Σύγκριση:</strong><br>
+  <ul style="margin: 10px 0; padding-left: 15px;">
+  
+  {% for title in compare_titles %}
+    <li>{{ title }}</li>
+  {% endfor %}
+</ul>
+
+  {% if compare_list|length == 2 %}
+    <a href="{{ url_for('compare') }}"><button>➡️ Σύγκριση Τώρα</button></a>
+  {% endif %}
+</div>
+{% endif %}
+ 
+<div class="pagination">
+  {% if page > 1 %}
+    <a href="/?page={{ page - 1 }}" class="pagination-link">← Προηγούμενα</a>
+  {% endif %}
+  {% if page < total_pages %}
+    <a href="/?page={{ page + 1 }}" class="pagination-link">Επόμενα →</a>
+  {% endif %}
+</div>
+
+
+<script>
+const checkboxes = document.querySelectorAll(".compare-check");
+
+checkboxes.forEach(cb => {
+  cb.addEventListener("change", () => {
+    fetch("/update_compare", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        checkbox_value: cb.value,
+        checked: cb.checked
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "error") {
+        alert(data.message);
+        cb.checked = false; // αποεπιλογή αν δεν επιτρέπεται
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
+
+

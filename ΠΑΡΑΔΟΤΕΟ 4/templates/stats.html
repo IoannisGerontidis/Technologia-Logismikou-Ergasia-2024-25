@@ -1,0 +1,144 @@
+<h2>📊 Στατιστικά Παιχνιδιών</h2>
+<a href="{{ url_for('home') }}" class="back-link">← Πίσω στην αρχική</a>
+
+<div class="stats-section">
+  <h3>🔥 Πιο Δημοφιλή (HOT!)</h3>
+  <ul>
+  {% for g in hot %}
+      <li><span class="index">{{ loop.index }}.</span> <a href="{{ url_for('game_details', index=loop.index0) }}">{{ g[0] }} <span class="score">(score: {{ g[2] }})</span></a></li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div class="stats-section">
+  <h3>🏆 Καλύτερα Βαθμολογημένα</h3>
+  <ul>
+  {% for g in best %}
+      <li><span class="index">{{ loop.index }}.</span> <a href="{{ url_for('game_details', index=loop.index0) }}">{{ g[0] }} <span class="score">– {{ g[2] }}/100</span></a></li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div class="stats-section">
+  <h3>🆕 Νεότερα Παιχνίδια</h3>
+  <ul>
+  {% for g in new %}
+      <li><span class="index">{{ loop.index }}.</span> <a href="{{ url_for('game_details', index=loop.index0) }}">{{ g[0] }} <span class="release-year">({{ g[1] }})</span></a></li>
+  {% endfor %}
+  </ul>
+</div>
+
+<style>
+  /* Βασικές ρυθμίσεις */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    color: #2c3e50;
+    margin: 20px auto;
+    max-width: 700px;
+    padding: 0 15px;
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.4rem;
+    margin-bottom: 30px;
+    color: #34495e;
+  }
+
+  /* Link επιστροφής */
+  .back-link {
+    display: inline-block;
+    margin-bottom: 35px;
+    color: #2980b9;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 1.1rem;
+  }
+  .back-link:hover {
+    color: #e74c3c;
+    text-decoration: underline;
+  }
+
+  /* Κάρτες στατιστικών */
+  .stats-section {
+    background: #ffffff;
+    padding: 25px 30px;
+    margin-bottom: 35px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .stats-section:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+  }
+
+  .stats-section h3 {
+    margin-top: 0;
+    color: #1abc9c;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  /* Λίστες χωρίς bullets */
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  /* Στοιχεία λίστας */
+  ul li {
+    padding: 12px 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #ecf0f1;
+    transition: background-color 0.2s ease;
+    border-radius: 6px;
+  }
+  ul li:last-child {
+    border-bottom: none;
+  }
+
+  ul li:hover {
+    background-color: #eaf7f6;
+  }
+
+  /* Αριθμοί θέσεων */
+  .index {
+    color: #16a085;
+    font-weight: 700;
+    min-width: 30px;
+    text-align: right;
+    font-size: 1.2rem;
+  }
+
+  /* Links στα παιχνίδια */
+  ul li a {
+    color: #34495e;
+    text-decoration: none;
+    flex-grow: 1;
+    transition: color 0.3s ease;
+  }
+  ul li a:hover {
+    color: #e74c3c;
+    text-decoration: underline;
+  }
+
+  /* Σκορ και Έτος */
+  .score, .release-year {
+    color: #95a5a6;
+    font-weight: 600;
+    margin-left: 8px;
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+</style>
+

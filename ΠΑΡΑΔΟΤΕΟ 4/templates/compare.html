@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>Σύγκριση Παιχνιδιών</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007acc;
+      font-weight: bold;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 30px;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 14px 20px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .compare-table th {
+      background-color: #f0f0f0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .compare-table td {
+      border-top: 1px solid #e0e0e0;
+      font-size: 15px;
+    }
+
+    .compare-table tr:nth-child(even) td {
+      background-color: #fafafa;
+    }
+
+    .compare-table td:nth-child(2) {
+      background-color: #e7f5ff; /* Μπλε για το πρώτο παιχνίδι */
+    }
+
+    .compare-table td:nth-child(3) {
+      background-color: #fff3e6; /* Πορτοκαλί για το δεύτερο παιχνίδι */
+    }
+
+    img {
+      max-width: 160px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .compare-table th, .compare-table td {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      img {
+        max-width: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>🔍 Σύγκριση Παιχνιδιών</h2>
+  <a href="/">← Επιστροφή στην αρχική</a>
+  <table class="compare-table">
+    <tr><th>Χαρακτηριστικό</th><th>{{ g1[0] }}</th><th>{{ g2[0] }}</th></tr>
+    <tr><td>Ημ/νία</td><td>{{ g1[1] }}</td><td>{{ g2[1] }}</td></tr>
+    <tr><td>Metacritic</td><td>{{ g1[2] }}</td><td>{{ g2[2] }}</td></tr>
+    <tr><td>Playtime</td><td>{{ g1[4] }}</td><td>{{ g2[4] }}</td></tr>
+    <tr><td>Είδος</td><td>{{ g1[6] }}</td><td>{{ g2[6] }}</td></tr>
+    <tr><td>Πλατφόρμες</td><td>{{ g1[5] }}</td><td>{{ g2[5] }}</td></tr>
+  </table>
+</body>
+</html>

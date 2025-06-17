@@ -1,0 +1,87 @@
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .login-container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 320px;
+    text-align: center;
+  }
+  h2 {
+    margin-bottom: 20px;
+    color: #34495e;
+  }
+  input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1.8px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  input:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #2980b9;
+  }
+  p.error-msg {
+    color: #e74c3c;
+    margin: 10px 0 0 0;
+    font-weight: 600;
+  }
+  a.register-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a.register-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="login-container">
+  <h2>Σύνδεση</h2>
+  <form method="post" novalidate>
+    <input name="username" placeholder="Όνομα χρήστη" required>
+    <input name="password" type="password" placeholder="Κωδικός" required>
+    <button type="submit">Login</button>
+  </form>
+
+{% if success %}
+  <p style="color: green;">✅ Η εγγραφή σας ήταν επιτυχής. Παρακαλώ συνδεθείτε.</p>
+{% endif %}
+
+  {% if error %}
+    <p class="error-msg">{{ error }}</p>
+  {% endif %}
+
+  <a class="register-link" href="{{ url_for('register') }}">Δεν έχετε λογαριασμό; Εγγραφείτε τώρα</a>
+</div>
